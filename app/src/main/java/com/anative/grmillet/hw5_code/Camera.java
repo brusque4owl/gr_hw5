@@ -6,6 +6,7 @@ package com.anative.grmillet.hw5_code;
 
 public class Camera {
 
+
     private float[] pos = new float[3]; // camera position
     private float[] uAxis = new float[3], vAxis = new float[3],
             nAxis = new float[3];
