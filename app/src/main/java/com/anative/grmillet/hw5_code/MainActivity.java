@@ -156,12 +156,13 @@ class SurfaceView extends GLSurfaceView{
                 deltaX = currentX[0] - previousX[0];
                 deltaY = currentY[0] - previousY[0];
 
+                // 손가락 1개로 터치
                 if (e.getPointerCount() == 1) {
 
                     previousX[1] = previousX[0];
                     currentX[1] = currentX[0];
 
-                    if (MainActivity.leftButton.isChecked() == true) {
+                    if (MainActivity.leftButton.isChecked() == true) {    // move along x,y axes
                         if (Math.abs(deltaY) > SENSITIVITY)
                             mRenderer.mCamera.MoveUpward(deltaY);
                         if (Math.abs(deltaX) > SENSITIVITY)
@@ -174,7 +175,7 @@ class SurfaceView extends GLSurfaceView{
                         if (Math.abs(deltaX) > SENSITIVITY)
                             mRenderer.mCamera.Yaw(deltaX);
 
-                    } else if (MainActivity.middleButton2.isChecked() == true) {
+                    } else if (MainActivity.middleButton2.isChecked() == true) {   // move along z axis
                         if (Math.abs(deltaY) > SENSITIVITY)
                             mRenderer.mCamera.MoveForward(deltaY);
 

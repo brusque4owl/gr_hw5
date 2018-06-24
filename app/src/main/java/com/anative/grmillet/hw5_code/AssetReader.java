@@ -72,6 +72,8 @@ public class AssetReader {
         }
     }
 
+    // BufferConverter.java의 floatArrayToBuffer()를 호출하여 float배열을 buffer형태로 변환해준다.
+    //                   또는 shortArrayToBuffer()를 호출한다.
     /**
      * filename에 해당하는 바이너리 파일을 읽어서 이에 해당하는 float 배열을 리턴하는 함수.
      * @param filename 읽고자 하는 데이터의 이름.

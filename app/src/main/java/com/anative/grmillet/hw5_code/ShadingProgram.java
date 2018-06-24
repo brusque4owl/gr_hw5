@@ -41,6 +41,7 @@ class LocMaterialParameter {
     int specular_exponent;
 }
 
+// Prepare_shader_program()
 public class ShadingProgram extends GLES30Program{
 
     final static int NUMBER_OF_LIGHT_SUPPORTED = 4;
@@ -60,6 +61,9 @@ public class ShadingProgram extends GLES30Program{
     LightParameters light[];
 
     MaterialParameters materialMario = new MaterialParameters();
+    MaterialParameters materialBuilding = new MaterialParameters();
+    MaterialParameters materialBus = new MaterialParameters();
+    MaterialParameters materialBike = new MaterialParameters();
 
     public ShadingProgram(String vertexShaderCode, String fragmentShaderCode){
         super(vertexShaderCode, fragmentShaderCode);
@@ -108,6 +112,7 @@ public class ShadingProgram extends GLES30Program{
     public void initLightsAndMaterial() {
         GLES30.glUseProgram(mId);
 
+        // Light 설정
         GLES30.glUniform4f(locGlobalAmbientColor, 0.115f, 0.115f, 0.115f, 1.0f);
         for (int i = 0; i < NUMBER_OF_LIGHT_SUPPORTED; i++) {
             GLES30.glUniform1i(locLight[i].light_on, 0); // turn off all lights initially
@@ -137,6 +142,7 @@ public class ShadingProgram extends GLES30Program{
 
 
         // Material 설정.
+        // Mario 설정
         materialMario.ambient_color[0] = 0.24725f;
         materialMario.ambient_color[1] = 0.1995f;
         materialMario.ambient_color[2] = 0.0745f;
@@ -158,6 +164,76 @@ public class ShadingProgram extends GLES30Program{
         materialMario.emissive_color[1] = 0.1f;
         materialMario.emissive_color[2] = 0.0f;
         materialMario.emissive_color[3] = 1.0f;
+
+        // Building 설정
+        materialBuilding.ambient_color[0] = 0.24725f;
+        materialBuilding.ambient_color[1] = 0.1995f;
+        materialBuilding.ambient_color[2] = 0.0745f;
+        materialBuilding.ambient_color[3] = 1.0f;
+
+        materialBuilding.diffuse_color[0] = 0.75164f;
+        materialBuilding.diffuse_color[1] = 0.60648f;
+        materialBuilding.diffuse_color[2] = 0.22648f;
+        materialBuilding.diffuse_color[3] = 1.0f;
+
+        materialBuilding.specular_color[0] = 0.728281f;
+        materialBuilding.specular_color[1] = 0.655802f;
+        materialBuilding.specular_color[2] = 0.466065f;
+        materialBuilding.specular_color[3] = 1.0f;
+
+        materialBuilding.specular_exponent = 51.2f;
+
+        materialBuilding.emissive_color[0] = 0.1f;
+        materialBuilding.emissive_color[1] = 0.1f;
+        materialBuilding.emissive_color[2] = 0.0f;
+        materialBuilding.emissive_color[3] = 1.0f;
+
+        // Bus 설정
+        materialBus.ambient_color[0] = 0.24725f;
+        materialBus.ambient_color[1] = 0.1995f;
+        materialBus.ambient_color[2] = 0.0745f;
+        materialBus.ambient_color[3] = 1.0f;
+
+        materialBus.diffuse_color[0] = 0.75164f;
+        materialBus.diffuse_color[1] = 0.60648f;
+        materialBus.diffuse_color[2] = 0.22648f;
+        materialBus.diffuse_color[3] = 1.0f;
+
+        materialBus.specular_color[0] = 0.728281f;
+        materialBus.specular_color[1] = 0.655802f;
+        materialBus.specular_color[2] = 0.466065f;
+        materialBus.specular_color[3] = 1.0f;
+
+        materialBus.specular_exponent = 51.2f;
+
+        materialBus.emissive_color[0] = 0.1f;
+        materialBus.emissive_color[1] = 0.1f;
+        materialBus.emissive_color[2] = 0.0f;
+        materialBus.emissive_color[3] = 1.0f;
+
+        // Bike 설정
+        materialBike.ambient_color[0] = 0.24725f;
+        materialBike.ambient_color[1] = 0.1995f;
+        materialBike.ambient_color[2] = 0.0745f;
+        materialBike.ambient_color[3] = 1.0f;
+
+        materialBike.diffuse_color[0] = 0.75164f;
+        materialBike.diffuse_color[1] = 0.60648f;
+        materialBike.diffuse_color[2] = 0.22648f;
+        materialBike.diffuse_color[3] = 1.0f;
+
+        materialBike.specular_color[0] = 0.728281f;
+        materialBike.specular_color[1] = 0.655802f;
+        materialBike.specular_color[2] = 0.466065f;
+        materialBike.specular_color[3] = 1.0f;
+
+        materialBike.specular_exponent = 51.2f;
+
+        materialBike.emissive_color[0] = 0.1f;
+        materialBike.emissive_color[1] = 0.1f;
+        materialBike.emissive_color[2] = 0.0f;
+        materialBike.emissive_color[3] = 1.0f;
+
     }
 
     public void initFlags() {
@@ -246,7 +322,7 @@ public class ShadingProgram extends GLES30Program{
     }
 
     /*
-                Setup For Material.
+                Setup For Material of Mario
      */
     public void setUpMaterialMario() {
         GLES30.glUniform4fv(locMaterial.ambient_color, 1, BufferConverter.floatArrayToBuffer(materialMario.ambient_color));
@@ -257,9 +333,42 @@ public class ShadingProgram extends GLES30Program{
     }
 
     /*
+            Setup For Material of Building
+    */
+    public void setUpMaterialBuilding() {
+        GLES30.glUniform4fv(locMaterial.ambient_color, 1, BufferConverter.floatArrayToBuffer(materialBuilding.ambient_color));
+        GLES30.glUniform4fv(locMaterial.diffuse_color, 1, BufferConverter.floatArrayToBuffer(materialBuilding.diffuse_color));
+        GLES30.glUniform4fv(locMaterial.specular_color, 1, BufferConverter.floatArrayToBuffer(materialBuilding.specular_color));
+        GLES30.glUniform1f(locMaterial.specular_exponent, materialBuilding.specular_exponent);
+        GLES30.glUniform4fv(locMaterial.emissive_color, 1, BufferConverter.floatArrayToBuffer(materialBuilding.emissive_color));
+    }
+
+    /*
+            Setup For Material of Bus
+    */
+    public void setUpMaterialBus() {
+        GLES30.glUniform4fv(locMaterial.ambient_color, 1, BufferConverter.floatArrayToBuffer(materialBus.ambient_color));
+        GLES30.glUniform4fv(locMaterial.diffuse_color, 1, BufferConverter.floatArrayToBuffer(materialBus.diffuse_color));
+        GLES30.glUniform4fv(locMaterial.specular_color, 1, BufferConverter.floatArrayToBuffer(materialBus.specular_color));
+        GLES30.glUniform1f(locMaterial.specular_exponent, materialBus.specular_exponent);
+        GLES30.glUniform4fv(locMaterial.emissive_color, 1, BufferConverter.floatArrayToBuffer(materialBus.emissive_color));
+    }
+
+    /*
+        Setup For Material of Bike
+    */
+    public void setUpMaterialBike() {
+        GLES30.glUniform4fv(locMaterial.ambient_color, 1, BufferConverter.floatArrayToBuffer(materialBike.ambient_color));
+        GLES30.glUniform4fv(locMaterial.diffuse_color, 1, BufferConverter.floatArrayToBuffer(materialBike.diffuse_color));
+        GLES30.glUniform4fv(locMaterial.specular_color, 1, BufferConverter.floatArrayToBuffer(materialBike.specular_color));
+        GLES30.glUniform1f(locMaterial.specular_exponent, materialBike.specular_exponent);
+        GLES30.glUniform4fv(locMaterial.emissive_color, 1, BufferConverter.floatArrayToBuffer(materialBike.emissive_color));
+    }
+
+
+    /*
                 Setup For Light.
      */
-
     public void set_lights1() {
         GLES30.glUseProgram(mId);
         GLES30.glUniform1i(locLight[1].light_on, light[1].light_on);
